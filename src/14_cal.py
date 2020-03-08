@@ -27,7 +27,7 @@ print out a calendar for April in 2015, but if you omit either the year or both 
 it should use today’s date to get the month and year.
 """
 
-import sys
+from sys import argv
 import calendar
 from datetime import datetime
 
@@ -39,12 +39,20 @@ def print_calendar(month=today.month, year=today.year):
     print(the_calendar)
 
 
-if sys.argv.__len__() == 3:
-    print_calendar(int(sys.argv[1]), int(sys.argv[2]))
-elif sys.argv.__len__() == 2:
-    print_calendar(int(sys.argv[1]))
-else:
-    print_calendar()
+def main():
+    args = argv[1:]
+    try:
+        if len(args) == 2:
+            print_calendar(int(args[0]), int(args[1]))
+        elif len(args) == 1:
+            print_calendar(int(args[0]))
+        else:
+            print_calendar()
+    except ValueError:
+        print(f'{args} is invalid, 14_cal.py expects 0, 1, or 2 arguments, example: python3 14_cal.py 03 2020')
+        exit(1)
 
 
+if __name__ == '__main__':
+    main()
 
